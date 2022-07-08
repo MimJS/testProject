@@ -10,7 +10,7 @@ module.exports = async ({ token, data }) => {
   const isUser = await dbReq(`SELECT * FROM users WHERE token='${token}'`);
   if (isUser) {
     if (md5(data.oldPassword) != isUser[0].password) {
-      return { status: false, msg: "Старый пароль неверный" };
+      return { status: false, msg: "Current password isn't correct" };
     } else {
       const token = await getRandomString(128);
       const value = await dbReq(

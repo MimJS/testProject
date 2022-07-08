@@ -28,6 +28,7 @@ const resolveRequest = (req, res) => {
     "updateProfile",
     "getAllUsers",
     "changePassword",
+    "createNotif",
   ];
   if (!action || !payload || !actionList.includes(action)) {
     res.sendStatus(503);
@@ -50,7 +51,7 @@ const resolveRequest = (req, res) => {
           }
         } else {
           console.log(r);
-          res.send({ status: false, msg: "Почта или пароль не правильная" });
+          res.send({ status: false, msg: "Email or password isn't correct" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -60,9 +61,13 @@ const resolveRequest = (req, res) => {
     getReg(payload)
       .then((r) => {
         if (r) {
-          res.send({ status: true, data: r });
+          if (r?.status) {
+            return res.send(r);
+          } else {
+            return res.send({ status: true, data: r });
+          }
         } else {
-          res.send({ status: false, msg: "Произошла ошибка" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => res.send(error));
@@ -73,7 +78,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true, data: r });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -84,7 +89,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true, data: r });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -95,7 +100,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true });
         } else {
-          res.send({ status: false, msg: "Повторите запрос чуть позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -106,7 +111,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true, data: r });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -117,7 +122,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true, data: r });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -128,7 +133,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -139,7 +144,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -150,7 +155,7 @@ const resolveRequest = (req, res) => {
         if (r) {
           res.send({ status: true, data: r });
         } else {
-          res.send({ status: false, msg: "Попробуйте позже" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
@@ -167,7 +172,7 @@ const resolveRequest = (req, res) => {
           }
         } else {
           console.log(r);
-          res.send({ status: false, msg: "Произошла ошибка" });
+          res.send({ status: false, msg: "Ooops, something went wrong" });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
