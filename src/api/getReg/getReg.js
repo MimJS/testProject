@@ -11,7 +11,7 @@ module.exports = async ({ mail, password }) => {
   const regTime = Date.now();
   const value = await dbReq(`SELECT id FROM users WHERE mail='${mail}'`);
   if (value[0]) {
-    return { status: false, msg: "Почта уже кем-то занята" };
+    return { status: false, msg: "Email is alredy used" };
   }
   const lastId = await dbReq(`SELECT MAX(id) FROM users`);
   console.log(lastId);
