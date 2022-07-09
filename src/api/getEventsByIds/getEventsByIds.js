@@ -12,7 +12,7 @@ module.exports = async ({ token, ids }) => {
       const idsArray = ids.toString();
       console.log(idsArray);
       const value = await dbReq(
-        `SELECT * FROM events WHERE id IN (${idsArray}) AND date >= ${Date.now()} ORDER BY date ASC`
+        `SELECT * FROM events WHERE id IN (${idsArray}) ORDER BY date ASC`
       );
       if (value) {
         console.log(value);
