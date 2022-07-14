@@ -1,5 +1,6 @@
 const changePassword = require("./changePassword/changePassword");
 const createEvent = require("./createEvent/createEvent");
+const createNotif = require("./createNotif/createNotif");
 const deleteEvent = require("./deleteEvent/deleteEvent");
 const getAllUsers = require("./getAllUsers/getAllUsers");
 const getAuth = require("./getAuth/getAuth");
@@ -173,6 +174,17 @@ const resolveRequest = (req, res) => {
         } else {
           console.log(r);
           res.send({ status: false, msg: "Ooops, something went wrong" });
+        }
+      })
+      .catch((e) => console.log(e) & res.send(error));
+  }
+  if (action == "createNotif") {
+    createNotif(payload)
+      .then((r) => {
+        if (r) {
+          res.send({ status: true });
+        } else {
+          res.send({ status: False });
         }
       })
       .catch((e) => console.log(e) & res.send(error));
