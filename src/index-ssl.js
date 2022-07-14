@@ -1,9 +1,9 @@
-const { createServer, createSSLServer } = require("./lib/modules/express");
+const { createSSLServer } = require("./lib/modules/express");
 const { createConnection } = require("./lib/modules/mysql");
 
 const startBackend = () => {
   console.log(`[=----] Loading... [EXPRESS]`);
-  createSSLServer(() => console.log(`EXPRESS server is on!`), true);
+  createSSLServer(() => console.log(`EXPRESS server is on!`));
   console.log(`[==---] Loading... [EXPRESS Settings]`);
   console.log(`[===--] Loading... [MYSQL]`);
   createConnection(() => console.log(`MYSQL connection created!`));
@@ -13,5 +13,4 @@ const startBackend = () => {
 };
 
 startBackend()
-
-module.exports = startBackend;
+console.log(':3')
