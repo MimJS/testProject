@@ -25,7 +25,8 @@ const createSSLServer = () => {
   app.get("/", (req, res) => {
     res.sendStatus(503);
   });
-  https.createServer(options, app).listen(443);
+  const srv = https.createServer(options, app);
+  srv.listen(443)
 };
 
 const createServer = (callback) => {
