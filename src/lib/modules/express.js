@@ -4,6 +4,7 @@ const { port, postUrl } = require("../cfgs/config.express");
 const https = require("https");
 const fs = require("fs");
 const cors = require("cors");
+const path = require("path");
 
 const createServer = (callback, ssl) => {
   const app = express();
@@ -22,14 +23,13 @@ const createServer = (callback, ssl) => {
   });
   if (ssl) {
     const options = {
-      key: fs.readFileSync("key.pem"),
-      cert: fs.readFileSync("cert.pem"),
+      key: fs.readFileSync(path.join(__dirname, "./key.pem")),
+      cert: fs.readFileSync(path.join(__dirname, "./cert.pem")),
     };
     https.createServer(options, app).listen(443);
-  } else {
-    app.listen(port, () => console.log(`port listen: ${port}`));
-    callback();
   }
+  app.listen(port, () => console.log(`port listen: ${port}`));
+  callback();
 };
 
 module.exports = { createServer };
