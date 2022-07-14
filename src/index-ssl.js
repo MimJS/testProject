@@ -12,4 +12,6 @@ const startBackend = () => {
   console.log(`Backend status: RUNNING`);
 };
 
+startBackend()
+
 module.exports = startBackend;
