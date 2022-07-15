@@ -7,7 +7,7 @@ module.exports = async ({ eventData, token }) => {
   }
   const isUser = await getAuth({ token }).catch((e) => false);
   if (isUser) {
-    const {
+    let {
       author,
       name,
       description,
@@ -20,7 +20,7 @@ module.exports = async ({ eventData, token }) => {
       timeStart,
       hasMinted,
       photoType,
-      photoUrl
+      photoUrl,
     } = eventData;
     let timeStartDate = null;
     if (timeStart) {
@@ -32,13 +32,31 @@ module.exports = async ({ eventData, token }) => {
     eventDateStart.setUTCHours(23, 59, 59, 58);
     const eventDateEnd = new Date(endDate);
     eventDateEnd.setUTCHours(23, 59, 59, 58);
+    name = name.replace("'", "\'").replace('"', '\"').replace("`", "\`");
+    description = description
+      .replace("'", "\'")
+      .replace('"', '\"')
+      .replace("`", "\`");
+    author = author.replace("'", "\'").replace('"', '\"').replace("`", "\`");
     const value = await dbReq(
-      `INSERT INTO events (author,photo,name,date,description,createdDate,author_login,source,twitter,eventType,projectBase, isModer, dateEnd, timeStart, hasMinted) VALUES ('${author}','${photoType == 'file' ? photo : photoUrl}','${name}',${eventDateStart.getTime()},'${description}',${Date.now()},'${
-        isUser.login
-      }', '${source}','${twitter}','${eventType.toLowerCase()}','${projectBase.toLowerCase()}', ${
-        isUser.isAdmin
-      }, ${eventDateEnd.getTime()}, ${timeStartDate},
-      '${hasMinted.toLowerCase()}')`
+      `INSERT INTO events (author,photo,name,date,description,createdDate,author_login,source,twitter,eventType,projectBase, isModer, dateEnd, timeStart, hasMinted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [
+        author,
+        photoType == "file" ? photo : photoUrl,
+        name,
+        eventDateStart.getTime(),
+        description,
+        Date.now(),
+        isUser.login,
+        source,
+        twitter,
+        eventType.toLowerCase(),
+        projectBase.toLowerCase(),
+        isUser.isAdmin,
+        eventDateEnd.getTime(),
+        timeStartDate,
+        hasMinted.toLowerCase(),
+      ]
     );
     if (value) {
       return true;

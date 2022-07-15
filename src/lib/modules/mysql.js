@@ -30,11 +30,11 @@ const createConnection = async (callback) => {
   }
 };
 
-const dbReq = async (sql) => {
+const dbReq = async (sql, arr = []) => {
   if (!isRun) {
     return { status: false };
   }
-  const [rows] = await db.execute(sql);
+  const [rows] = await db.execute(sql, arr);
   return rows;
 };
 
